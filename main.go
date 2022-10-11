@@ -18,8 +18,8 @@ var Lijnplaatsen = [][]int{
 	/*N*/ {25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25},
 	/*R*/ {21, 24, 26, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27},
 	/*Q2*/ {20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20},
-	/*K408*/ {40, 40, 40, 40, 40, 40},
-	/*K409*/ {50, 50, 50, 50, 50, 50},
+	/*K408*/ {39, 39, 39, 39, 39, 39},
+	/*K409*/ {49, 49, 49, 49, 49, 49},
 	/*LOODSC*/ {240},
 	/*HLN*/ {},
 }
@@ -49,7 +49,7 @@ func geefPlaatsenOpBlok(blok string, startlijn int, eindlijn int) [4]int {
 		}
 	}
 	for i := startlijn; i <= eindlijn; i++ {
-		for v := 0; v < 5; v++ {
+		for v := 0; v < 4; v++ {
 			var plaatsen float64 = vermenigvuldiger[v] * float64(Lijnplaatsen[blokindex][i-1])
 			totaalPlaatsen[v] += int(math.Round(plaatsen))
 		}
@@ -61,7 +61,7 @@ func main() {
 	for {
 		var keuze int
 		fmt.Println("1. Kies kaai")
-		fmt.Println("2. invul")
+		fmt.Println("2. Aantal plaats voor blok")
 		fmt.Print("Keuze: ")
 		fmt.Scanln(&keuze)
 
@@ -88,7 +88,7 @@ func main() {
 				}
 			}
 			fmt.Println("Op blok ", strings.ToUpper(blok), ":")
-			fmt.Println("voor VOLVO_XC60 auto's zijn er ", tot[0], " plaatsen")
+			fmt.Println("voor VOLVO_XC60 / MG_5 auto's zijn er ", tot[0], " plaatsen")
 			fmt.Println("voor PEUGEOT_208 auto's zijn er ", tot[1], " plaatsen")
 			fmt.Println("voor FORD_RANGER auto's zijn er ", tot[2], " plaatsen")
 			fmt.Println("voor CITROEN_AMI auto's zijn er ", tot[3], " plaatsen")
