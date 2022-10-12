@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-var BlokIndex = []string{"E", "F", "H", "KCA", "KD", "KCB", "PL", "J", "L", "N", "R", "Q2", "K408", "K409", "LOODSC", "HLN"}
+var BlokIndex = []string{"E", "F", "H", "KCA", "KD", "KCB", "PL", "J", "L", "N", "R", "Q2", "K408", "K409", "LOODSC", "HLN", "KA", "SP45"}
 var Lijnplaatsen = [][]int{
 	/*E*/ {19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 0, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 15, 9, 2},
 	/*F*/ {20, 21, 22, 22, 21, 21, 21, 21, 21, 21, 19, 19, 18, 16, 17, 22, 22, 18, 18, 18},
@@ -25,6 +25,8 @@ var Lijnplaatsen = [][]int{
 	/*K409*/ {49, 49, 49, 49, 49, 49},
 	/*LOODSC*/ {10, 10, 10, 10, 10, 10, 10, 10, 0, 6, 12, 12, 12, 12, 12, 12, 12, 12, 12, 10, 10, 10},
 	/*HLN*/ {15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15},
+	/*KA*/ {30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30},
+	/*SP45*/ {98, 98, 98, 98},
 }
 
 // lengtecat --> veryshort/short/normal/long/verylong
@@ -59,12 +61,58 @@ func geefPlaatsenOpBlok(blok string, startlijn int, eindlijn int, eigenlengte fl
 	return totaalPlaatsen
 }
 
+/*
+func verdeelAutosOverBlokken() {
+	var blokindex int
+	var auto string
+	var aantal int
+	var blok string
+	fmt.Print("Naam AUTO: ")
+	fmt.Scanln(&auto)
+	fmt.Print("Aantal: ")
+	fmt.Scanln(&aantal)
+	
+	
+	fmt.Print("Blok: ")
+	fmt.Scanln(&blok)
+	for s := range BlokIndex {
+		if BlokIndex[s] == strings.ToUpper(blok) {
+			blokindex = s
+			break
+		}
+	}
+}
+*/
+
+func hoeveelLijnenOpBlok(aantal int) int {
+	var blok string
+	var blokindex int
+	var lengte float64
+	fmt.Print("Lengte (m): ")
+	fmt.Scanln(&lengte)
+	fmt.Print("Blok: ")
+	fmt.Scanln(&blok)
+	for s := range BlokIndex {
+		if BlokIndex[s] == strings.ToUpper(blok) {
+			blokindex = s
+			break
+		}
+	}
+	var vermenigvuldiger float64 = 4.9 / lengte
+	if aantal % int(float64(Lijnplaatsen[blokindex][0]) * vermenigvuldiger) == 0 {
+		return aantal / int(float64(Lijnplaatsen[blokindex][0]) * vermenigvuldiger)
+	} else {
+		return (aantal / int(float64(Lijnplaatsen[blokindex][0]) * vermenigvuldiger)) + 1
+	}
+}
+
 func main() {
 	for {
 		var keuze int
 		fmt.Println("\n1. Kies kaai")
 		fmt.Println("2. Aantal plaats voor blok")
-		fmt.Println("3. Overzicht aantal lijnen per blok")
+		fmt.Println("3. Hoeveel lijnen")
+		fmt.Println("9. Overzicht aantal lijnen per blok")
 		fmt.Print("Keuze: ")
 		fmt.Scanln(&keuze)
 
@@ -110,6 +158,11 @@ func main() {
 				fmt.Println("voor CITROEN_AMI (2.7m) auto's zijn er ", tot[3], " plaatsen")
 			}
 		} else if keuze == 3 {
+			var aantal int
+			fmt.Print("Hoeveel auto's: ")
+			fmt.Scanln(&aantal)
+			fmt.Println("Aantal lijnen nodig: ", hoeveelLijnenOpBlok(aantal))
+		} else if keuze == 9 {
 			for i := range BlokIndex {
 				fmt.Println(BlokIndex[i], ":  ", len(Lijnplaatsen[i]), " lijnen")
 			}
