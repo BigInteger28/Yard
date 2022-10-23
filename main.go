@@ -3,33 +3,71 @@ package main
 import (
 	"fmt"
 	"math"
-	"strconv"
 	"strings"
 )
 
-var BlokIndex = []string{"E", "F", "H", "KCA", "KD", "KCB", "PL", "J", "L", "N", "R", "Q2", "K408", "K409", "LOODSC", "HLN", "KA", "SP45"}
+var BlokIndex = []string{"BA", "BB", "BC", "CA", "CB", "CC", "DA", "DB", "DC", "E", "HLN", "SUI", "PL", "PL100", "F", "G", "HHN", "H", "I", "KCA", "J", "K", "L", "M", "KCB", "KD", "N", "O", "P", "Q2", "Q9", "Q10", "R", "S", "SP45", "U", "U2", "W", "Z01", "Z02", "Z03", "Z04", "K405", "K408", "K409", "HHW", "KA", "LOODS-C", "KE", "KB"}
 var Lijnplaatsen = [][]int{
-	/*E*/ {19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 0, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 15, 9, 2},
-	/*F*/ {20, 21, 22, 22, 21, 21, 21, 21, 21, 21, 19, 19, 18, 16, 17, 22, 22, 18, 18, 18},
-	/*H*/ {26, 26, 26, 26, 26, 25, 24, 25, 25, 25, 25, 25, 25, 25, 22, 22, 22, 22, 22, 22},
-	/*KCA*/ {20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 14, 14, 14, 14, 14, 14},
-	/*KD*/ {29, 29, 29, 29, 29},
-	/*KCB*/ {20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 14, 14, 14, 14, 14, 14},
-	/*PL*/ {21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21},
-	/*J*/ {27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27},
-	/*L*/ {30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 28, 28, 28},
-	/*N*/ {25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25},
-	/*R*/ {21, 24, 26, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27},
-	/*Q2*/ {20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20},
-	/*K408*/ {39, 39, 39, 39, 39, 39},
-	/*K409*/ {49, 49, 49, 49, 49, 49},
-	/*LOODSC*/ {10, 10, 10, 10, 10, 10, 10, 10, 0, 6, 12, 12, 12, 12, 12, 12, 12, 12, 12, 10, 10, 10},
-	/*HLN*/ {15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15},
-	/*KA*/ {30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30},
-	/*SP45*/ {98, 98, 98, 98},
+	{4, 43},
+	{4, 43},
+	{4, 43},
+	{4, 79},
+	{4, 80},
+	{4, 80},
+	{4, 83},
+	{4, 80},
+	{4, 81},
+	//E
+	{20, 86},
+	{15, 40},
+	//SUI
+	{0, 0},
+	{21, 40},
+	{20, 5},
+	{19, 20},
+	{12, 27},
+	//HHN
+	{8, 8},
+	{24, 19},
+	{12, 19},
+	{18, 20},
+	{30, 20},
+	{12, 20},
+	{30, 20},
+	{12, 20},
+	{18, 20},
+	//KD
+	{30, 4},
+	{23, 21},
+	{20, 26},
+	{20, 47},
+	//Q2
+	{20, 47},
+	{20, 5},
+	{20, 6},
+	//R
+	{29, 21},
+	{8, 20},
+	{95, 4},
+	{9, 168},
+	{13, 168},
+	//W
+	{2, 21},
+	{2, 78},
+	{2, 29},
+	{2, 59},
+	{2, 40},
+	//K405
+	{38, 8},
+	{47, 6},
+	{50, 6},
+	{18, 11},
+	{30, 12},
+	{11, 18},
+	{18, 9},
+	{8, 6},
 }
 
-// lengtecat --> veryshort/short/normal/long/verylong
 type Auto struct {
 	merk      string
 	model     string
@@ -37,52 +75,50 @@ type Auto struct {
 	hoogte    float64
 }
 
-func geefPlaatsenOpBlok(blok string, startlijn int, eindlijn int, eigenlengte float64) [4]int {
+type Blok struct {
+	id    int
+	naam  string
+	score int
+}
+
+func geefPlaatsenOpBlok(blok string, aantalLijnen int, vermenigvuldiger float64) [4]int {
 	var blokindex int
 	var totaalPlaatsen [4]int
-	var vermenigvuldiger = [4]float64{1, 1.114, 0.86, 1.814}
+	var percentages = [4]float64{1, 0.75, 0.5, 1.8}
 	for s := range BlokIndex {
 		if BlokIndex[s] == strings.ToUpper(blok) {
 			blokindex = s
 			break
 		}
 	}
-	for i := startlijn; i <= eindlijn; i++ {
-		if eigenlengte == 0 {
-			for v := range vermenigvuldiger {
-				var plaatsen float64 = vermenigvuldiger[v] * float64(Lijnplaatsen[blokindex][i-1])
-				totaalPlaatsen[v] += int(math.Round(plaatsen))
-			}
-		} else {
-			var plaatsen float64 = (4.9 / eigenlengte) * float64(Lijnplaatsen[blokindex][i-1])
-			totaalPlaatsen[0] += int(math.Round(plaatsen))
+	if vermenigvuldiger == 0 {
+		for v := range percentages {
+			var plaatsen float64 = percentages[v] * float64(Lijnplaatsen[blokindex][0]) * float64(aantalLijnen)
+			totaalPlaatsen[v] += int(math.Round(plaatsen))
 		}
+	} else {
+		var plaatsen float64 = vermenigvuldiger * float64(Lijnplaatsen[blokindex][0]) * float64(aantalLijnen)
+		totaalPlaatsen[0] += int(math.Round(plaatsen))
 	}
 	return totaalPlaatsen
 }
 
-/*
-func verdeelAutosOverBlokken() {
-	var blokindex int
-	var auto string
-	var aantal int
-	var blok string
-	fmt.Print("Naam AUTO: ")
-	fmt.Scanln(&auto)
-	fmt.Print("Aantal: ")
-	fmt.Scanln(&aantal)
-	
-	
-	fmt.Print("Blok: ")
-	fmt.Scanln(&blok)
-	for s := range BlokIndex {
-		if BlokIndex[s] == strings.ToUpper(blok) {
-			blokindex = s
-			break
+func rekenBlok(locatie int) {
+	var BootBlokken = []string{"U", "SP45", "KA", "K409", "LOODS-C", "HHW", "K408", "Q10", "Q9", "Q2", "R", "N", "L", "J", "KCB", "KD", "KCA", "H", "F", "HHN", "K405", "PL", "HLN", "E", "SUI", "DC", "DB", "DA"}
+	var afstand405 = []int{0}
+	var afstand408 = []int{12, 0, 15, 16, 17, 18, 22, 19, 20, 21, 9, 11, 10, 8, 14, 13, 7, 5, 4, 6, 1, 2, 3}
+	blokken := make([]Blok, len(BootBlokken))
+	for i := range BootBlokken {
+		blokken[i].id = i
+		blokken[i].naam = BootBlokken[i]
+		if locatie == 405 {
+			blokken[i].score += afstand405[i]
+		} else {
+			blokken[i].score += afstand408[i]
 		}
 	}
+
 }
-*/
 
 func hoeveelLijnenOpBlok(aantal int) int {
 	var blok string
@@ -99,10 +135,10 @@ func hoeveelLijnenOpBlok(aantal int) int {
 		}
 	}
 	var vermenigvuldiger float64 = 4.9 / lengte
-	if aantal % int(float64(Lijnplaatsen[blokindex][0]) * vermenigvuldiger) == 0 {
-		return aantal / int(float64(Lijnplaatsen[blokindex][0]) * vermenigvuldiger)
+	if aantal%int(float64(Lijnplaatsen[blokindex][0])*vermenigvuldiger) == 0 {
+		return aantal / int(float64(Lijnplaatsen[blokindex][0])*vermenigvuldiger)
 	} else {
-		return (aantal / int(float64(Lijnplaatsen[blokindex][0]) * vermenigvuldiger)) + 1
+		return (aantal / int(float64(Lijnplaatsen[blokindex][0])*vermenigvuldiger)) + 1
 	}
 }
 
@@ -112,50 +148,43 @@ func main() {
 		fmt.Println("\n1. Kies kaai")
 		fmt.Println("2. Aantal plaats voor blok")
 		fmt.Println("3. Hoeveel lijnen")
-		fmt.Println("9. Overzicht aantal lijnen per blok")
+		fmt.Println("9. Overzicht aantal plaatsen per blok")
 		fmt.Print("Keuze: ")
 		fmt.Scanln(&keuze)
 
 		if keuze == 1 {
 
 		} else if keuze == 2 {
-			var start string
+			var lijnen int
 			var blok string
 			var eigenlengte float64
 			var tot [4]int
-			fmt.Print("Eigen lengte (0 is geen eigen lengte): ")
+			fmt.Print("Vermenigvuldiger lengte (0 is geen eigen lengte): ")
 			fmt.Scanln(&eigenlengte)
 			fmt.Print("Blok: ")
 			fmt.Scanln(&blok)
-			for start != "." {
-				var eindln int
-				fmt.Print("Start lijn: ")
-				fmt.Scanln(&start)
-				startln, _ := strconv.Atoi(start)
-				if start != "." {
-					fmt.Print("Stop lijn: ")
-					fmt.Scanln(&eindln)
-					var totL [4]int
-					if eigenlengte > 0 {
-						totL = geefPlaatsenOpBlok(blok, startln, eindln, eigenlengte)
-					} else {
-						totL = geefPlaatsenOpBlok(blok, startln, eindln, 0)
-					}
-					for leng := 0; leng < 4; leng++ {
-						tot[leng] += totL[leng]
-					}
-				}
+			fmt.Print("Aantal lijnen beschikbaar: ")
+			fmt.Scanln(&lijnen)
+			var totL [4]int
+			if eigenlengte > 0 {
+				totL = geefPlaatsenOpBlok(blok, lijnen, eigenlengte)
+			} else {
+				totL = geefPlaatsenOpBlok(blok, lijnen, 0)
 			}
+			for leng := 0; leng < 4; leng++ {
+				tot[leng] += totL[leng]
+			}
+
 			if eigenlengte > 0 {
 				fmt.Println("\nOp blok ", strings.ToUpper(blok), ":")
 				el := fmt.Sprintf("%.1f", eigenlengte)
 				fmt.Println("voor auto's (", el, "m ) zijn er ", tot[0], " plaatsen")
 			} else {
 				fmt.Println("\nOp blok ", strings.ToUpper(blok), ":")
-				fmt.Println("voor MG_5 auto's (4.9m) zijn er ", tot[0], " plaatsen")
-				fmt.Println("voor PEUGEOT_208 (4.4m) auto's zijn er ", tot[1], " plaatsen")
-				fmt.Println("voor FORD_RANGER (5.7m) auto's zijn er ", tot[2], " plaatsen")
-				fmt.Println("voor CITROEN_AMI (2.7m) auto's zijn er ", tot[3], " plaatsen")
+				fmt.Println("voor 100% marge zijn er ", tot[0], " plaatsen")
+				fmt.Println("voor 75% marge (camionet) zijn er ", tot[1], " plaatsen")
+				fmt.Println("voor 50% marge (lang) zijn er ", tot[2], " plaatsen")
+				fmt.Println("voor 180% marege (heel kort) zijn er ", tot[3], " plaatsen")
 			}
 		} else if keuze == 3 {
 			var aantal int
@@ -164,7 +193,7 @@ func main() {
 			fmt.Println("Aantal lijnen nodig: ", hoeveelLijnenOpBlok(aantal))
 		} else if keuze == 9 {
 			for i := range BlokIndex {
-				fmt.Println(BlokIndex[i], ":  ", len(Lijnplaatsen[i]), " lijnen")
+				fmt.Println(BlokIndex[i], ":  ", Lijnplaatsen[i][0]*Lijnplaatsen[i][1], " plaatsen")
 			}
 		}
 	}
