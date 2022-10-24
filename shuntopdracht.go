@@ -42,41 +42,47 @@ func editShuntOrder() {
 func askModel() string {
 	var model string
 	fmt.Println("Modellen --> ")
-	fmt.Print("..., RMARX")
+	fmt.Print("XPENG G3,\tXPG3\nXPENG P5,\tXPP5\nXPENG P7,\tXPP7\n--------------------\n")
+	fmt.Print("MG3,\tMG3\nMG4 ELECTRIC,\tMMG4_EV\nMG5 ELECTRIC,\tMMG5_EV\n--------------------\n")
+	fmt.Print("TOYOTA YARIS,\tTYARI\nTOYOTA YARIS CROSS,\tTYARIC\nTOYOTA SUPRA,\tTSUPR\nTOYOTA PROACE CITY,\tTPROAC\nTOYOTA PROACE CITY ELECTRIC,\tTPROACEV\nTOYOTA PROACE ELECTRIC,\tTPROAEV\nTOYOTA PROACE,\tTPROA\nTOYOTA HIGHLANDER,\tTHIGH\nTOYOTA AYGO,\tTAYGO\n--------------------\n")
 	fmt.Print("\nModel: ")
 	fmt.Scanln(&model)
 	return strings.ToUpper(model)
+}
+
+func plakVins(vins *[]string, bestemming *string) {
+	fmt.Print("\nBestemming: ")
+	fmt.Scanln(&bestemming)
+	(*bestemming) = strings.ToUpper(&bestemming)
+	fmt.Print("Plak vins in: ")
+	scanner := bufio.NewScanner(os.Stdin)
+	for {
+		scanner.Scan()
+		vin := scanner.Text()
+		if len(vin) != 0 {
+			(*vins) = append(vins, vin)
+		} else {
+			break
+		}
+	}
 }
 
 func main() {
 	for {
 		var keuze int
 		fmt.Println("1. Polestar WWL --> NIT")
-		fmt.Println("2  WWL --> NIT")
-		fmt.Println("3. CRO --> NIT")
+		fmt.Println("2  WWL    --> NIT")
+		fmt.Println("3. CRO    --> NIT")		
 		fmt.Println("4. OWN SHUNT")
-		fmt.Println("5. Edit shuntopdracht naam en ordertype")
-		fmt.Println("")
+		fmt.Println("5. TOYOTA --> TERMINAL")
+		fmt.Println("6. Edit shuntopdracht naam en ordertype")
 		fmt.Println("")
 		fmt.Print("Keuze: ")
 		fmt.Scanln(&keuze)
 		var bestemming string
 		var vins []string		
-		if keuze < 4  {
-			fmt.Print("\nBestemming: ")
-			fmt.Scanln(&bestemming)
-			bestemming = strings.ToUpper(bestemming)
-			fmt.Print("Plak vins in: ")
-			scanner := bufio.NewScanner(os.Stdin)
-			for {
-				scanner.Scan()
-				vin := scanner.Text()
-				if len(vin) != 0 {
-					vins = append(vins, vin)
-				} else {
-					break
-				}
-			}
+		if keuze < 5  {
+			plakVins(&vins,&bestemming)
 		}		
 		if keuze == 1 {
 			for i := range vins {
@@ -110,6 +116,28 @@ func main() {
 				fmt.Print("AssignCustomerOrder,vin", vins[i], ",order_CodeSHUNT_", ordercode, ",executorCRO,customerICO\n")
 			}
 		} else if keuze == 5 {
+			var vins [][]string
+			var terminal string
+			var aantalmodellen int
+			var modellen []string
+			fmt.Print("Naar welke terminal (bat/nit/htz): ")
+			fmt.Scanln(&terminal)
+			terminal = strings.ToUpper(terminal)
+			fmt.Print("Hoeveel Toyota Modellen: ")
+			fmt.Scanln(&aantalmodellen)
+			modellen = make([]string, aantalmodellen)
+			vins = make([][]string, aantalmodellen)
+			for i := 0; i < aantalmodellen; i++ {
+				modellen[i] = askModel()
+				plakVins(&vins[i],&bestemming)
+			}
+			for a := 0; a < aantalmodellen; a++ {
+				for b := 0; b < len(vins[a]); b++ {
+					announceCargo(vins[a][b], modellen[a], bestemming, "UECC")
+					fmt.Print("AssignCustomerOrder,vin", vins[a][b], ",order_CodeSHUNT_TMME_", terminal, ",executorAUTOLUC,customerICO\n")
+				}
+			} 
+		} else if keuze == 6 {
 			editShuntOrder()
 		}
 	}
