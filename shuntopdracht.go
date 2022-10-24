@@ -50,21 +50,24 @@ func askModel() string {
 	return strings.ToUpper(model)
 }
 
-func plakVins(vins *[]string, bestemming *string) {
+func plakVins() (string, []string) {
+	var bestemming string
+	var vins []string
 	fmt.Print("\nBestemming: ")
 	fmt.Scanln(&bestemming)
-	(*bestemming) = strings.ToUpper(&bestemming)
+	bestemming = strings.ToUpper(bestemming)
 	fmt.Print("Plak vins in: ")
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
 		scanner.Scan()
 		vin := scanner.Text()
 		if len(vin) != 0 {
-			(*vins) = append(vins, vin)
+			vins = append(vins, vin)
 		} else {
 			break
 		}
 	}
+	return bestemming, vins
 }
 
 func main() {
@@ -72,7 +75,7 @@ func main() {
 		var keuze int
 		fmt.Println("1. Polestar WWL --> NIT")
 		fmt.Println("2  WWL    --> NIT")
-		fmt.Println("3. CRO    --> NIT")		
+		fmt.Println("3. CRO    --> NIT")
 		fmt.Println("4. OWN SHUNT")
 		fmt.Println("5. TOYOTA --> TERMINAL")
 		fmt.Println("6. Edit shuntopdracht naam en ordertype")
@@ -80,10 +83,10 @@ func main() {
 		fmt.Print("Keuze: ")
 		fmt.Scanln(&keuze)
 		var bestemming string
-		var vins []string		
-		if keuze < 5  {
-			plakVins(&vins,&bestemming)
-		}		
+		var vins []string
+		if keuze < 5 {
+			bestemming, vins = plakVins()
+		}
 		if keuze == 1 {
 			for i := range vins {
 				announceCargo(vins[i], "POLE2", bestemming, "POLESTAR")
@@ -120,23 +123,25 @@ func main() {
 			var terminal string
 			var aantalmodellen int
 			var modellen []string
+			var bestemming []string
 			fmt.Print("Naar welke terminal (bat/nit/htz): ")
 			fmt.Scanln(&terminal)
 			terminal = strings.ToUpper(terminal)
 			fmt.Print("Hoeveel Toyota Modellen: ")
 			fmt.Scanln(&aantalmodellen)
 			modellen = make([]string, aantalmodellen)
+			bestemming = make([]string, aantalmodellen)
 			vins = make([][]string, aantalmodellen)
 			for i := 0; i < aantalmodellen; i++ {
 				modellen[i] = askModel()
-				plakVins(&vins[i],&bestemming)
+				bestemming[i], vins[i] = plakVins()
 			}
 			for a := 0; a < aantalmodellen; a++ {
 				for b := 0; b < len(vins[a]); b++ {
-					announceCargo(vins[a][b], modellen[a], bestemming, "UECC")
+					announceCargo(vins[a][b], modellen[a], bestemming[a], "UECC")
 					fmt.Print("AssignCustomerOrder,vin", vins[a][b], ",order_CodeSHUNT_TMME_", terminal, ",executorAUTOLUC,customerICO\n")
 				}
-			} 
+			}
 		} else if keuze == 6 {
 			editShuntOrder()
 		}
