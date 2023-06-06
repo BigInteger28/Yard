@@ -89,19 +89,19 @@ func onlyVins() []string {
 func main() {
 	for {
 		var keuze int
-		fmt.Println("---------- NIT ----------\n")
+		fmt.Println("---------- NIT ----------")
 		fmt.Println("1. Polestar WWL --> NIT")
 		fmt.Println("2  WWL    --> NIT")
 		fmt.Println("3. CRO_CANADAKAAI    --> NIT")
-		fmt.Println("---------- BAT ----------\n")
+		fmt.Println("\n---------- BAT ----------")
 		fmt.Println("4  WWL    --> BAT")		
 		fmt.Println("5. CRO_BRTT    --> BAT")
-		fmt.Println("---------- HANZE ----------\n")
+		fmt.Println("\n---------- HANZE ----------")
 		fmt.Println("6. WWL --> HANZE")
 		fmt.Println("7. HANZE    --> WWL")
 		fmt.Println("8. CRO_BRTT    --> HANZE")
 		fmt.Println("9. H&H eerst aanmaken CLDN(PSA) --> HANZE")
-		fmt.Println("---------- ANDERE ----------\n")
+		fmt.Println("\n---------- ANDERE ----------")
 		fmt.Println("10. OWN SHUNT")
 		fmt.Println("11. TOYOTA --> TERMINAL")
 		fmt.Println("12. Edit shuntopdracht naam en ordertype")
