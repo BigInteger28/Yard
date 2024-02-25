@@ -1,0 +1,42 @@
+PE1
+PE1005 12 false
+PE1006 12 false
+PE1007 12 false
+PE1008 12 false
+PE1009 12 true
+
+QE1
+QE1001 12 false
+QE1002 12 false
+QE1003 12 false
+QE1004 12 false
+QE1005 12 false
+QE1006 12 false
+QE1007 12 true
+
+RE1
+RE1001 12 false
+RE1002 9 false nodrm
+RE1006 7 false usntd
+RE1009 12 true
+
+SE1
+SE1003 12 false
+SE1004 12 false
+SE1005 12 false
+
+TE1
+TE1001 12 false
+TE1002 12 false
+TE1003 12 false
+TE1004 12 false
+TE1005 12 false
+TE1006 12 false
+TE1007 12 false
+TE1008 12 false
+TE1009 11 false nodrm
+TE1010 12 false
+TE1011 12 false
+TE1013 2 false nodrm
+TE1014 7 false
+TE1015 4 true uschs
