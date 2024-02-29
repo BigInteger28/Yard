@@ -30,13 +30,14 @@ func main() {
 		fmt.Println("1. HH MODEL naar TOS MODEL")
 		fmt.Println("2  FINISH AFO")
 		fmt.Println("3. VERANDER TIJDSTIP vins left")
-		fmt.Println("4  POSITIONSCAN POSITIE VAN VINS")		
-		fmt.Println("5. Zoekers VIN blad afdrukken")
-		fmt.Println("6. Gele cargo sticker afdrukken")
-		fmt.Println("7. Block position")
-		fmt.Println("8. Wijzig positie meerdere vins")
-		fmt.Println("9. Inventory Check")
-		fmt.Println("10. Vins opladen onder laatste 7 of 8")
+		fmt.Println("4  ARRIVALSCAN VAN VINS")	
+		fmt.Println("5  POSITIONSCAN POSITIE VAN VINS")		
+		fmt.Println("6. Zoekers VIN blad afdrukken")
+		fmt.Println("7. Gele cargo sticker afdrukken")
+		fmt.Println("8. Block position")
+		fmt.Println("9. Wijzig positie meerdere vins")
+		fmt.Println("10. Inventory Check")
+		fmt.Println("11. Vins opladen onder laatste 7 of 8")
 		fmt.Println("")
 		fmt.Print("Keuze: ")
 		fmt.Scanln(&keuze)
@@ -100,6 +101,16 @@ func main() {
 			}
 		} else if keuze == 4 {
 			var vins []string
+			var visit string
+			fmt.Print("Visit: ")
+			fmt.Scanln(&visit)
+			visit = strings.ToUpper(visit)
+			vins = plakInput("vins")
+			for i := range vins {
+				fmt.Print("ArrivedScan, vin ", vins[i], ", visit ", visit, "\n")
+			}
+		} else if keuze == 5 {
+			var vins []string
 			var position string
 			var slot int
 			fmt.Print("Scan op positie: ")
@@ -109,9 +120,9 @@ func main() {
 			fmt.Scanln(&slot)
 			vins = plakInput("vins")
 			for i := range vins {
-				fmt.Print("PositionScan ", vins[i], ", position ", position, " SLOT ", slot, "\n")
+				fmt.Print("PositionScan, vin ", vins[i], ", position ", position, " ,slot ", slot, "\n")
 			}
-		} else if keuze == 5 {
+		} else if keuze == 6 {
 			var keuze int
 			var printer string
 			fmt.Println("1. PKY406\n2.HAN07")
@@ -127,7 +138,7 @@ func main() {
 			for i := range vins {
 				fmt.Print("PrintNextPosStickerexecution,vin ", vins[i], ", printerName ", printer,"\n")
 			}
-		} else if keuze == 6 {
+		} else if keuze == 7 {
 			var keuze int
 			var printer string
 			fmt.Println("1. PTO425\n2.PTOHAN08")
@@ -143,7 +154,7 @@ func main() {
 			for i := range vins {
 				fmt.Print("PrintCargoLabelexecution,vin ", vins[i], ", printerName ", printer,"\n")
 			}
-		} else if keuze == 7 {
+		} else if keuze == 8 {
 			var positions []string
 			var starttijd string
 			var eindtijd string
@@ -159,7 +170,7 @@ func main() {
 			for i := range positions {
 				fmt.Print("BlockPosition, position", positions[i], ",start_time", starttijd, ",end_time", eindtijd,"\n")
 			}
-		} else if keuze == 8 {
+		} else if keuze == 9 {
 			var vins []string
 			var position string
 			var startS int
@@ -182,7 +193,7 @@ func main() {
 					fmt.Print("vin_edit ", vins[i], ", Position ", position, ", SLOT ", startS+i, "\n")
 				}
 			}			
-		} else if keuze == 9 {
+		} else if keuze == 10 {
 			var vins []string
 			var check string
 			fmt.Print("Inventory Check (TRUE/FALSE): ")
@@ -192,7 +203,7 @@ func main() {
 			for i := range vins {
 				fmt.Print("vin_edit ", vins[i], ", Inventory_Check ", check, "\n")
 			}
-		} else if keuze == 10 {
+		} else if keuze == 11 {
 			var vins []string
 			var laatste int
 			fmt.Print("Onder laatste: ")
