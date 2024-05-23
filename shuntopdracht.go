@@ -90,21 +90,22 @@ func main() {
 	for {
 		var keuze int
 		fmt.Println("---------- NIT ----------")
-		fmt.Println("1. Polestar WWL --> NIT")
-		fmt.Println("2  WWL    --> NIT")
+		fmt.Println("1. Polestar WWL --> NIT (MET REANNOUCECARGO)")
+		fmt.Println("2. WWL    --> NIT")
 		fmt.Println("3. CRO_CANADAKAAI    --> NIT")
 		fmt.Println("\n---------- BAT ----------")
-		fmt.Println("4  WWL    --> BAT")		
-		fmt.Println("5. CRO_BRTT    --> BAT")
+		fmt.Println("4. WWL    --> BAT (MET REANNOUCECARGO)")
+		fmt.Println("5. WWL    --> BAT")
+		fmt.Println("6. CRO_BRTT    --> BAT")
 		fmt.Println("\n---------- HANZE ----------")
-		fmt.Println("6. WWL --> HANZE")
-		fmt.Println("7. HANZE    --> WWL")
-		fmt.Println("8. CRO_BRTT    --> HANZE")
-		fmt.Println("9. H&H eerst aanmaken CLDN(PSA) --> HANZE")
+		fmt.Println("7. WWL --> HANZE")
+		fmt.Println("8. HANZE    --> WWL")
+		fmt.Println("9. CRO_BRTT    --> HANZE")
+		fmt.Println("10. H&H eerst aanmaken CLDN(PSA) --> HANZE")
 		fmt.Println("\n---------- ANDERE ----------")
-		fmt.Println("10. OWN SHUNT")
-		fmt.Println("11. TOYOTA --> TERMINAL")
-		fmt.Println("12. Edit shuntopdracht naam en ordertype")
+		fmt.Println("11. OWN SHUNT")
+		fmt.Println("12. TOYOTA --> TERMINAL")
+		fmt.Println("13. Edit shuntopdracht naam en ordertype")
 		fmt.Println("")
 		fmt.Print("Keuze: ")
 		fmt.Scanln(&keuze)
@@ -138,24 +139,29 @@ func main() {
 		} else if keuze == 5 {
 			vins = onlyVins()
 			for i := range vins {
-				fmt.Print("AssignCustomerOrder,vin", vins[i], ",order_CodeSHUNT_BRITT_BAT,executorCRO,customerICO\n")
+				fmt.Print("AssignCustomerOrder,vin", vins[i], ",order_CodeSHUNT_WWL_BAT,executorWWL,customerICO\n")
 			}
 		} else if keuze == 6 {
 			vins = onlyVins()
 			for i := range vins {
-				fmt.Print("AssignCustomerOrder,vin", vins[i], ",order_CodeSHUNT_WWL_HANZE,executorWWL,customerICO\n")
+				fmt.Print("AssignCustomerOrder,vin", vins[i], ",order_CodeSHUNT_BRITT_BAT,executorCRO,customerICO\n")
 			}
 		} else if keuze == 7 {
 			vins = onlyVins()
 			for i := range vins {
+				fmt.Print("AssignCustomerOrder,vin", vins[i], ",order_CodeSHUNT_WWL_HANZE,executorWWL,customerICO\n")
+			}
+		} else if keuze == 8 {
+			vins = onlyVins()
+			for i := range vins {
 				fmt.Print("AssignCustomerOrder,vin", vins[i], ",order_CodeSHUNT_HANZE_WWL,executorWWL,customerICO\n")
 			}			
-		} else if keuze == 8 {
+		} else if keuze == 9 {
 			vins = onlyVins()
 			for i := range vins {
 				fmt.Print("AssignCustomerOrder,vin", vins[i], ",order_CodeSHUNT_BRITT_HANZE,executorCRO,customerICO\n")
 			}
-		} else if keuze == 9 {
+		} else if keuze == 10 {
 			var keuze int
 			var executor string
 			fmt.Println("Executor -->")
@@ -172,7 +178,7 @@ func main() {
 			for i := range vins {
 				fmt.Print("AssignCustomerOrder,vin", vins[i], ",order_CodeSHUNT_CLDN_HANZE,executor", executor, "customerICO\n")
 			}
-		} else if keuze == 10 {
+		} else if keuze == 11 {
 			var ordercode string
 			var executor string
 			bestemming, vins = plakVins()
@@ -191,7 +197,7 @@ func main() {
 				announceCargo(vins[i], model, bestemming, "ICO")
 				fmt.Print("AssignCustomerOrder,vin", vins[i], ",order_CodeSHUNT_", ordercode, ",executor", executor, ",customerICO\n")
 			}
-		} else if keuze == 11 {
+		} else if keuze == 12 {
 			var vins [][]string
 			var terminal string
 			var aantalmodellen int
@@ -215,7 +221,7 @@ func main() {
 					fmt.Print("AssignCustomerOrder,vin", vins[a][b], ",order_CodeSHUNT_TMME_", terminal, ",executorAUTOLUC,customerICO\n")
 				}
 			}
-		} else if keuze == 12 {
+		} else if keuze == 13 {
 			editShuntOrder()
 		}
 	}
