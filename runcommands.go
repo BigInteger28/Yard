@@ -23,6 +23,29 @@ func plakInput(inputTxt string) []string {
 	return list
 }
 
+func plakVins() (string, []string) {
+	var bestemming string
+	var vins []string
+	fmt.Print("\nBestemming: ")
+	fmt.Scanln(&bestemming)
+	bestemming = strings.ToUpper(bestemming)
+	fmt.Print("Plak vins in: ")
+	scanner := bufio.NewScanner(os.Stdin)
+	for {
+		scanner.Scan()
+		vin := scanner.Text()
+		if len(vin) != 0 {
+			if len(vin) > 17 {
+				vin = vin[:17] // Neem alleen de eerste 17 tekens
+			}
+			vins = append(vins, vin)
+		} else {
+			break
+		}
+	}
+	return bestemming, vins
+}
+
 func getUserInput(text string) string {
 	var input string
 	fmt.Print(text)
@@ -57,6 +80,11 @@ func main() {
 		fmt.Println("16. Position aanpassen vins (inclusief CAT1/CAT10)")
 		fmt.Println("17. Extra 1 aanpasen")
 		fmt.Println("18. Vins op Canadakaai zetten (stellantis)")
+		fmt.Println("19. Vins op A2DOCK zetten (stellantis)")
+		fmt.Println("20. Shipment allowed true")
+		fmt.Println("21. Vins in systeem aanmaken (geen pov)")
+		fmt.Println("22. POV in systeem aanmaken")
+		fmt.Println("23. Verkeerd gescanned PositionScan van NIT-->BAT of BAT-->NIT")
 		fmt.Print("Keuze: ")
 		fmt.Scanln(&keuze)
 		if keuze == 0 {
@@ -133,13 +161,13 @@ func main() {
 		} else if keuze == 7 {
 			var keuze int
 			var printer string
-			fmt.Println("1. PKY406\n2.HAN07")
+			fmt.Println("1. PKY406\n2.PKYHAN07")
 			fmt.Print("Keuze: ")
 			fmt.Scanln(&keuze)
 			if keuze == 1 {
 				printer = "PKY406"
 			} else {
-				printer = "HAN07"
+				printer = "PKYHAN07"
 			}
 			var vins []string
 			vins = plakInput("vins")
@@ -155,7 +183,7 @@ func main() {
 			if keuze == 1 {
 				printer = "PTO425"
 			} else {
-				printer = "PTOHAN08"
+				printer = "PTO520"
 			}
 			vins = plakInput("vins")
 			for i := range vins {
@@ -256,14 +284,16 @@ func main() {
 		} else if keuze == 16 {
 			position := getUserInput("Position: ")
 			position = strings.ToUpper(position)
-			categorie1 := getUserInput("Categorie 1 (BAT/NIT/AERTS/CHZ/CSPICO/SHUNTING/ZWKICO/OSTICO): ")
-			categorie1 = strings.ToUpper(categorie1)
-			categorie10 := getUserInput("Categorie 10 (BATBAT/BATHTZ/CHZ_SUB/CSPICOYARD/NIT1/NIT2/ZWKICO/ZWKICOYARD/OSTOSTICO): ")
-			categorie10 = strings.ToUpper(categorie10)
+			category1 := getUserInput("Category 1 (BAT/NIT/AERTS/CHZ/CSPICO/SHUNTING/ZWKICO/OSTICO): ")
+			category1 = strings.ToUpper(category1)
+			category10 := getUserInput("Category 10 (BATBAT/BATHTZ/CHZ_SUB/CSPICOYARD/NIT1/NIT2/ZWKICO/ZWKICOYARD/OSTOSTICO): ")
+			category10 = strings.ToUpper(category10)
 			vins = plakInput("vins")
 			for i := range vins {
-				fmt.Print("vin_edit ", vins[i], ", CATEGORIE_1 ", categorie1, "\n")
-				fmt.Print("vin_edit ", vins[i], ", CATEGORIE_10 ", categorie10, "\n")
+				fmt.Print("vin_edit ", vins[i], ", POSITION ", position, "\n")
+				fmt.Print("vin_edit ", vins[i], ", CATEGORY_1 ", category1, "\n")
+				fmt.Print("vin_edit ", vins[i], ", CATEGORY_10 ", category10, "\n")
+				fmt.Print("vin_edit ", vins[i], ", LOCATION ", category1, "\n")
 			}
 		} else if keuze == 17 {
 			vins = plakInput("vins")
@@ -277,6 +307,58 @@ func main() {
 				fmt.Print("vin_edit ", vins[i], ", LOCATION CANA", "\n")
 				fmt.Print("vin_edit ", vins[i], ", CATEGORY_1 CANA", "\n")
 			}
+		} else if keuze == 19 {
+			vins = plakInput("vins")
+			for i := range vins {
+				fmt.Print("vin_edit ", vins[i], ", LOCATION A2DOCK", "\n")
+				fmt.Print("vin_edit ", vins[i], ", CATEGORY_1 A2DOCK", "\n")
+			}
+		} else if keuze == 20 {
+			vins = plakInput("vins")
+			for i := range vins {
+				fmt.Print("vin_edit ", vins[i], ", shipment_allowed true\n")
+			}
+		} else if keuze == 21 {
+			var bestemming string
+			bestemming, vins = plakVins()
+			model := getUserInput("Model: ")
+			customer := getUserInput("Customer: ")
+			for i := range vins {
+				fmt.Print("AnnounceCargo, vin ", vins[i], ", customer ", customer, ", final_destination ", bestemming, ", model ", model, "\n")
+			}			
+		} else if keuze == 22 {
+			var bestemming string
+			bestemming, vins = plakVins()
+			model := getUserInput("Model: ")
+			customer := getUserInput("Customer: ")
+			booking_reference := getUserInput("Booking_Reference: ")
+			shiplineout := getUserInput("Shipping Line Out: ")
+			//length, width, height, weight := 
+			for i := range vins {
+				fmt.Print("AnnounceCargo, vin ", vins[i], ", customer ", customer, ", final_destination ", bestemming, ", model ", model, ", secondhand true, booking_reference ", booking_reference, ", shipping_line_out ", shiplineout, ", ", "\n")
+			}			
+		} else if keuze == 23 {
+			var keuze int
+			fmt.Println("1. Van NIT naar BAT")
+			fmt.Println("2. Van BAT naar NIT")
+			fmt.Print("\nKeuze: ")
+			fmt.Scanln(&keuze)
+			vins := plakInput("vins")
+			positions := plakInput("positions")
+			slots := plakInput("slots")
+			for i := range positions {
+				if keuze == 1 {
+					//positions[i][:2] is eerste 2 tekens
+					positions[i] = positions[i][:2] + "1" + positions[i][2:]
+				} else {
+					for i := range positions {
+						positions[i] = positions[i][:2] + positions[i][3:]
+					}
+				}				
+			}
+			for i := range vins {
+				fmt.Print("PositionScan, ", vins[i], ", position ", positions[i], ", slot ", slots[i], "\n")
+			}			
 		}
 	}
 }
